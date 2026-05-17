@@ -77,8 +77,11 @@ export default function AboutSection() {
                   alt="अजय अनमोल - किसान आंदोलन अध्यक्ष"
                   className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full text-white text-6xl font-black">अजय अनमोल</div>';
+                    const target = e.currentTarget;
+                    target.style.display = 'none';
+                    if (target.parentElement) {
+                      target.parentElement.innerHTML = '<div class="flex items-center justify-center h-full text-white text-6xl font-black">अजय अनमोल</div>';
+                    }
                   }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
