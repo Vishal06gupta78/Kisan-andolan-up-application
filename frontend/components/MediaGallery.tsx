@@ -5,9 +5,13 @@ import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules';
 import { ZoomIn, X, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
+// @ts-ignore
 import 'swiper/css';
+// @ts-ignore
 import 'swiper/css/navigation';
+// @ts-ignore
 import 'swiper/css/pagination';
+// @ts-ignore
 import 'swiper/css/effect-coverflow';
 
 const galleryImages = [
@@ -72,7 +76,7 @@ const galleryImages = [
 export default function MediaGallery() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
+  const [selectedImage, setSelectedImage] = useState<(typeof galleryImages)[0] | null>(null);
   const [activeCategory, setActiveCategory] = useState('all');
 
   const categories = [
@@ -171,8 +175,12 @@ export default function MediaGallery() {
                       alt={image.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                       onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                        e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full text-6xl">📸</div>';
+                        const target = e.currentTarget;
+                        const parent = target.parentElement;
+                        target.style.display = 'none';
+                        if (parent) {
+                          parent.innerHTML = '<div class="flex items-center justify-center h-full text-6xl">📸</div>';
+                        }
                       }}
                     />
                   </div>
@@ -218,8 +226,12 @@ export default function MediaGallery() {
                 alt={image.title}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                  e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full bg-gray-100 text-4xl">🖼️</div>';
+                  const target = e.currentTarget;
+                  const parent = target.parentElement;
+                  target.style.display = 'none';
+                  if (parent) {
+                    parent.innerHTML = '<div class="flex items-center justify-center h-full bg-gray-100 text-4xl">🖼️</div>';
+                  }
                 }}
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
