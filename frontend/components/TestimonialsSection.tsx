@@ -89,8 +89,12 @@ export default function TestimonialsSection() {
                     alt={testimonials[currentIndex].name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.currentTarget.style.display = 'none';
-                      e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full bg-kisan-green text-white text-2xl font-bold">' + testimonials[currentIndex].name.charAt(0) + '</div>';
+                      const target = e.currentTarget;
+                      const parent = target.parentElement;
+                      target.style.display = 'none';
+                      if (parent) {
+                        parent.innerHTML = '<div class="flex items-center justify-center h-full bg-kisan-green text-white text-2xl font-bold">' + testimonials[currentIndex].name.charAt(0) + '</div>';
+                      }
                     }}
                   />
                 </div>
