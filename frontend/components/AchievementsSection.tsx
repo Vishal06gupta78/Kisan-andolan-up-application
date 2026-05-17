@@ -79,7 +79,7 @@ export default function AchievementsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeCategory, setActiveCategory] = useState('all');
-  const [selectedAchievement, setSelectedAchievement] = useState<typeof achievements[0] | null>(null);
+  const [selectedAchievement, setSelectedAchievement] = useState<(typeof achievements)[0] | null>(null);
 
   const filtered = activeCategory === 'all' 
     ? achievements 
@@ -146,8 +146,12 @@ export default function AchievementsSection() {
                   alt={achievement.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full bg-gradient-to-br from-kisan-green to-kisan-green-dark text-white text-4xl">🏆</div>';
+                    const target = e.currentTarget;
+                    const parent = target.parentElement;
+                    target.style.display = 'none';
+                    if (parent) {
+                      parent.innerHTML = '<div class="flex items-center justify-center h-full bg-gradient-to-br from-kisan-green to-kisan-green-dark text-white text-4xl">🏆</div>';
+                    }
                   }}
                 />
                 <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-kisan-green">

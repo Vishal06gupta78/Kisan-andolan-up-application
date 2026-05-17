@@ -79,7 +79,7 @@ const categories = [
 export default function VideoSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [activeVideo, setActiveVideo] = useState<typeof videos[0] | null>(null);
+  const [activeVideo, setActiveVideo] = useState<(typeof videos)[0] | null>(null);
   const [activeCategory, setActiveCategory] = useState('all');
 
   const filtered = activeCategory === 'all' 
@@ -189,8 +189,12 @@ export default function VideoSection() {
                   alt={video.title}
                   className="w-full h-full object-cover opacity-80 group-hover:opacity-60 transition-opacity group-hover:scale-105 duration-500"
                   onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement.innerHTML = '<div class="flex items-center justify-center h-full text-white text-4xl">🎬</div>';
+                    const target = e.currentTarget;
+                    const parent = target.parentElement;
+                    target.style.display = 'none';
+                    if (parent) {
+                      parent.innerHTML = '<div class="flex items-center justify-center h-full text-white text-4xl">🎬</div>';
+                    }
                   }}
                 />
                 <div className="absolute inset-0 flex items-center justify-center">
