@@ -8,6 +8,9 @@ const path = require('path');
 
 const upload = multer({ storage: multer.memoryStorage() });
 
+// Dynamic base URL for production
+const BASE_URL = process.env.BASE_URL || `http://localhost:${process.env.PORT || 5000}`;
+
 // Create local directory for cards
 const cardsDir = path.join(__dirname, '../../public/cards');
 if (!fs.existsSync(cardsDir)) {
@@ -75,7 +78,7 @@ router.post('/register', upload.single('photo'), async (req, res) => {
       const photoFileName = `${memberId}-photo.jpg`;
       const photoPath = path.join(cardsDir, photoFileName);
       fs.writeFileSync(photoPath, req.file.buffer);
-      photoUrl = `http://localhost:5000/cards/${photoFileName}`;
+      photoUrl = `${BASE_URL}/cards/${photoFileName}`;
     }
     
     const member = new Member({
@@ -108,7 +111,7 @@ router.post('/register', upload.single('photo'), async (req, res) => {
       fs.writeFileSync(cardPath, cardBuffer);
       console.log('✅ Card saved to:', cardPath);
       
-      cardUrl = `http://localhost:5000/cards/${cardFileName}`;
+      cardUrl = `${BASE_URL}/cards/${cardFileName}`;
       member.cardUrl = cardUrl;
       await member.save();
       console.log('✅ Card URL saved to member:', cardUrl);
